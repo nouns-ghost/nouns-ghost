@@ -15,6 +15,7 @@ import AuctionPage from './pages/Auction';
 import GovernancePage from './pages/Governance';
 import CreateProposalPage from './pages/CreateProposal';
 import VotePage from './pages/Vote';
+import VoteOpacityPage from './pages/VoteOpacity';
 import NoundersPage from './pages/Nounders';
 import NotFoundPage from './pages/NotFound';
 import Playground from './pages/Playground';
@@ -63,6 +64,7 @@ function App() {
             <Route exact path="/create-proposal" component={CreateProposalPage} />
             <Route exact path="/vote" component={GovernancePage} />
             <Route exact path="/vote/:id" component={VotePage} />
+            <Route exact path="/voteopacity" component={VoteOpacityPage} />
             <Route exact path="/playground" component={Playground} />
             <Route component={NotFoundPage} />
           </Switch>

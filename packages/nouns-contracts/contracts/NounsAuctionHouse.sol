@@ -54,6 +54,15 @@ contract NounsAuctionHouse is INounsAuctionHouse, PausableUpgradeable, Reentranc
     // The active auction
     INounsAuctionHouse.Auction public auction;
 
+    // The allowed opacities
+    uint8[] public opacities;
+
+    // The current opacityIndex
+    uint8 public opacityIndex;
+
+    // The votes
+    uint256[] public votes;
+
     /**
      * @notice Initialize the auction house and base contracts,
      * populate configuration values, and pause the contract.
@@ -65,7 +74,9 @@ contract NounsAuctionHouse is INounsAuctionHouse, PausableUpgradeable, Reentranc
         uint256 _timeBuffer,
         uint256 _reservePrice,
         uint8 _minBidIncrementPercentage,
-        uint256 _duration
+        uint256 _duration,
+        uint8[] calldata _opacities,
+        uint8 _opacityIndex
     ) external initializer {
         __Pausable_init();
         __ReentrancyGuard_init();
@@ -79,6 +90,10 @@ contract NounsAuctionHouse is INounsAuctionHouse, PausableUpgradeable, Reentranc
         reservePrice = _reservePrice;
         minBidIncrementPercentage = _minBidIncrementPercentage;
         duration = _duration;
+        opacities = _opacities;
+        require(_opacityIndex < opacities.length, 'opacity index exceeds opacity array length');
+        opacityIndex = _opacityIndex;
+        votes = new uint256[](opacities.length);
     }
 
     /**
@@ -189,13 +204,25 @@ contract NounsAuctionHouse is INounsAuctionHouse, PausableUpgradeable, Reentranc
     }
 
     /**
+     * @notice Vote the opacity index
+     * @dev Callable by nouns holders
+     */
+     function vote(uint256 tokenId, uint8 index) external {
+        require(nouns.ownerOf(tokenId) == msg.sender, 'non nouns holder');
+        require(index < opacities.length, 'out of bound index');
+        require(!nouns.getVote(tokenId), 'the token has been already used for vote');
+        nouns.setVote(tokenId);
+        votes[index] = votes[index] + 1;
+     }
+
+    /**
      * @notice Create an auction.
      * @dev Store the auction details in the `auction` state variable and emit an AuctionCreated event.
      * If the mint reverts, the minter was updated without pausing this contract first. To remedy this,
      * catch the revert and pause this contract.
      */
     function _createAuction() internal {
-        try nouns.mint() returns (uint256 nounId) {
+        try nouns.mint(opacities[opacityIndex]) returns (uint256 nounId) {
             uint256 startTime = block.timestamp;
             uint256 endTime = startTime + duration;
 
@@ -237,6 +264,9 @@ contract NounsAuctionHouse is INounsAuctionHouse, PausableUpgradeable, Reentranc
             _safeTransferETHWithFallback(owner(), _auction.amount);
         }
 
+        opacityIndex = _calculateOpacityIndex();
+        _clearVotes();
+
         emit AuctionSettled(_auction.nounId, _auction.bidder, _auction.amount);
     }
 
@@ -258,4 +288,30 @@ contract NounsAuctionHouse is INounsAuctionHouse, PausableUpgradeable, Reentranc
         (bool success, ) = to.call{ value: value, gas: 30_000 }(new bytes(0));
         return success;
     }
+
+    /**
+     * @notice Calculate opacity index from current vote
+     * @dev minmun index is returned when it's tie
+     */
+     function _calculateOpacityIndex() internal view returns (uint8) {
+        uint8 index = 0;
+        uint256 max = 0;
+        for (uint8 i = 0; i < opacities.length; i++) {
+            if (votes[i] > max) {
+                index = i;
+                max = votes[i];
+            }
+        }
+
+        return index;
+     }
+
+    /**
+     * @notice Clear votes
+     */
+     function _clearVotes() internal {
+        for (uint i = 0; i < opacities.length; i++) {
+            votes[i] = 0;
+        }
+     }
 }

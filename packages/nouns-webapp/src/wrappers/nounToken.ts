@@ -146,3 +146,25 @@ export const useUserVotesAsOfBlock = (block: number | undefined): number | undef
     }) || [];
   return votes?.toNumber();
 };
+
+export const useBalanceOf = (owner: string) => {
+  const [balance] =
+    useContractCall<[EthersBN]>({
+      abi,
+      address: config.addresses.nounsToken,
+      method: 'balanceOf',
+      args: [owner],
+    }) || [];
+  return balance?.toNumber();
+};
+
+export const useTokenOfOwnerNotVoted = (owner: string) => {
+  const ret =
+    useContractCall<[[EthersBN], EthersBN]>({
+      abi,
+      address: config.addresses.nounsToken,
+      method: 'tokenOfOwnerNotVoted',
+      args: [owner],
+    }) || [];
+  return ret;
+};

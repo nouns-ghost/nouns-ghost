@@ -85,6 +85,8 @@ task('deploy-local', 'Deploy contracts to hardhat')
               args.auctionReservePrice,
               args.auctionMinIncrementBidPercentage,
               args.auctionDuration,
+              [10, 25, 30, 35, 40],
+              2,
             ]),
         ],
       },

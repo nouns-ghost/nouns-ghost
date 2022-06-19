@@ -84,15 +84,17 @@ interface INounsDescriptor {
 
     function setBaseURI(string calldata baseURI) external;
 
-    function tokenURI(uint256 tokenId, INounsSeeder.Seed memory seed) external view returns (string memory);
+    function tokenURI(uint256 tokenId, INounsSeeder.Seed memory seed, uint8 opacity, bool voted) external view returns (string memory);
 
-    function dataURI(uint256 tokenId, INounsSeeder.Seed memory seed) external view returns (string memory);
+    function dataURI(uint256 tokenId, INounsSeeder.Seed memory seed, uint8 opacity, bool voted) external view returns (string memory);
 
     function genericDataURI(
         string calldata name,
         string calldata description,
-        INounsSeeder.Seed memory seed
+        INounsSeeder.Seed memory seed,
+        uint8 opacity,
+        bool voted
     ) external view returns (string memory);
 
-    function generateSVGImage(INounsSeeder.Seed memory seed) external view returns (string memory);
+    function generateSVGImage(INounsSeeder.Seed memory seed, uint8 opacity) external view returns (string memory);
 }

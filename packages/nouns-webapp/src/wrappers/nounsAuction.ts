@@ -14,6 +14,8 @@ export enum AuctionHouseContractFunction {
   nouns = 'nouns',
   createBid = 'createBid',
   settleCurrentAndCreateNewAuction = 'settleCurrentAndCreateNewAuction',
+  vote = 'vote',
+  opacities = 'opacities',
 }
 
 export interface Auction {

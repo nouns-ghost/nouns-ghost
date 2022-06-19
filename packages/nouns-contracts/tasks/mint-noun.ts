@@ -12,7 +12,7 @@ task('mint-noun', 'Mints a Noun')
     const nftFactory = await ethers.getContractFactory('NounsToken');
     const nftContract = nftFactory.attach(nounsToken);
 
-    const receipt = await (await nftContract.mint()).wait();
+    const receipt = await (await nftContract.mint(30)).wait();
     const nounCreated = receipt.events?.[1];
     const { tokenId } = nounCreated?.args as Result;
 

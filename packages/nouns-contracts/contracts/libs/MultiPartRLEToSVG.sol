@@ -16,11 +16,13 @@
  *********************************/
 
 pragma solidity ^0.8.6;
+import "@openzeppelin/contracts/utils/Strings.sol";
 
 library MultiPartRLEToSVG {
     struct SVGParams {
         bytes[] parts;
         string background;
+        uint8 opacity;
     }
 
     struct ContentBounds {
@@ -83,7 +85,7 @@ library MultiPartRLEToSVG {
             uint256 currentX = image.bounds.left;
             uint256 currentY = image.bounds.top;
             uint256 cursor;
-            string[16] memory buffer;
+            string[20] memory buffer;
 
             string memory part;
             for (uint256 i = 0; i < image.rects.length; i++) {
@@ -93,10 +95,16 @@ library MultiPartRLEToSVG {
                     buffer[cursor + 1] = lookup[currentX];         // x
                     buffer[cursor + 2] = lookup[currentY];         // y
                     buffer[cursor + 3] = palette[rect.colorIndex]; // color
+                    // opacity
+                    if (params.opacity < 10) {
+                        buffer[cursor + 4] = string(abi.encodePacked("0", Strings.toString(params.opacity)));
+                    } else {
+                        buffer[cursor + 4] = Strings.toString(params.opacity);
+                    }
 
-                    cursor += 4;
+                    cursor += 5;
 
-                    if (cursor >= 16) {
+                    if (cursor >= 20) {
                         part = string(abi.encodePacked(part, _getChunk(cursor, buffer)));
                         cursor = 0;
                     }
@@ -121,13 +129,13 @@ library MultiPartRLEToSVG {
      * @notice Return a string that consists of all rects in the provided `buffer`.
      */
     // prettier-ignore
-    function _getChunk(uint256 cursor, string[16] memory buffer) private pure returns (string memory) {
+    function _getChunk(uint256 cursor, string[20] memory buffer) private pure returns (string memory) {
         string memory chunk;
-        for (uint256 i = 0; i < cursor; i += 4) {
+        for (uint256 i = 0; i < cursor; i += 5) {
             chunk = string(
                 abi.encodePacked(
                     chunk,
-                    '<rect width="', buffer[i], '" height="10" x="', buffer[i + 1], '" y="', buffer[i + 2], '" fill="#', buffer[i + 3], '" />'
+                    '<rect width="', buffer[i], '" height="10" x="', buffer[i + 1], '" y="', buffer[i + 2], '" fill="#', buffer[i + 3], '"  fill-opacity="0.', buffer[i + 4],'" />'
                 )
             );
         }

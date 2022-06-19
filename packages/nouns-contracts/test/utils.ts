@@ -107,7 +107,7 @@ export const MintNouns = (
 ): ((amount: number) => Promise<void>) => {
   return async (amount: number): Promise<void> => {
     for (let i = 0; i < amount; i++) {
-      await token.mint();
+      await token.mint(30);
     }
     if (!burnNoundersTokens) return;
 
@@ -123,7 +123,7 @@ export const setTotalSupply = async (token: NounsToken, newTotalSupply: number):
 
   if (totalSupply < newTotalSupply) {
     for (let i = 0; i < newTotalSupply - totalSupply; i++) {
-      await token.mint();
+      await token.mint(30);
     }
     // If Nounder's reward tokens were minted totalSupply will be more than expected, so run setTotalSupply again to burn extra tokens
     await setTotalSupply(token, newTotalSupply);

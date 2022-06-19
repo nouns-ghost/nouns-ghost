@@ -51,6 +51,12 @@ contract NounsToken is INounsToken, Ownable, ERC721Checkpointable {
     // The noun seeds
     mapping(uint256 => INounsSeeder.Seed) public seeds;
 
+    // The noun opacity
+    mapping(uint256 => uint8) public opacities;
+
+    // The vote flag
+    mapping(uint256 => bool) public voted;
+
     // The internal noun ID tracker
     uint256 private _currentNounId;
 
@@ -146,11 +152,11 @@ contract NounsToken is INounsToken, Ownable, ERC721Checkpointable {
      * until 183 nounder Nouns have been minted (5 years w/ 24 hour auctions).
      * @dev Call _mintTo with the to address(es).
      */
-    function mint() public override onlyMinter returns (uint256) {
+    function mint(uint8 opacity) public override onlyMinter returns (uint256) {
         if (_currentNounId <= 1820 && _currentNounId % 10 == 0) {
-            _mintTo(noundersDAO, _currentNounId++);
+            _mintTo(noundersDAO, _currentNounId++, opacity);
         }
-        return _mintTo(minter, _currentNounId++);
+        return _mintTo(minter, _currentNounId++, opacity);
     }
 
     /**
@@ -167,7 +173,7 @@ contract NounsToken is INounsToken, Ownable, ERC721Checkpointable {
      */
     function tokenURI(uint256 tokenId) public view override returns (string memory) {
         require(_exists(tokenId), 'NounsToken: URI query for nonexistent token');
-        return descriptor.tokenURI(tokenId, seeds[tokenId]);
+        return descriptor.tokenURI(tokenId, seeds[tokenId], opacities[tokenId], voted[tokenId]);
     }
 
     /**
@@ -176,7 +182,7 @@ contract NounsToken is INounsToken, Ownable, ERC721Checkpointable {
      */
     function dataURI(uint256 tokenId) public view override returns (string memory) {
         require(_exists(tokenId), 'NounsToken: URI query for nonexistent token');
-        return descriptor.dataURI(tokenId, seeds[tokenId]);
+        return descriptor.dataURI(tokenId, seeds[tokenId], opacities[tokenId], voted[tokenId]);
     }
 
     /**
@@ -250,13 +256,51 @@ contract NounsToken is INounsToken, Ownable, ERC721Checkpointable {
     }
 
     /**
+     * @notice Get vote flag
+     * @dev for minter
+     */
+     function getVote(uint256 tokenId) override external view returns (bool){
+        return voted[tokenId];
+     }
+
+    /**
+     * @notice Set vote flag
+     * @dev Only callable by minter
+     */
+     function setVote(uint256 tokenId) override external onlyMinter {
+        voted[tokenId] = true;
+     }
+
+    /**
+     * @notice Get tokens which are not used for vote
+     * @dev 
+     */
+    function tokenOfOwnerNotVoted(address owner) external view returns (uint256[] memory, uint256) {
+        uint256 all = balanceOf(owner);
+        uint256 size = 0;
+        uint256[] memory ret = new uint256[](all);
+
+        for (uint256 i = 0; i < all; i++) {
+            uint256 token = tokenOfOwnerByIndex(owner, i);
+            if (voted[token]) {
+                continue;
+            }
+
+            ret[size++] = token;
+        }
+
+        return (ret, size);
+    }
+
+    /**
      * @notice Mint a Noun with `nounId` to the provided `to` address.
      */
-    function _mintTo(address to, uint256 nounId) internal returns (uint256) {
+    function _mintTo(address to, uint256 nounId, uint8 opacity) internal returns (uint256) {
         INounsSeeder.Seed memory seed = seeds[nounId] = seeder.generateSeed(nounId, descriptor);
+        opacities[nounId] = opacity;
 
         _mint(owner(), to, nounId);
-        emit NounCreated(nounId, seed);
+        emit NounCreated(nounId, seed); //TODO add opacity
 
         return nounId;
     }

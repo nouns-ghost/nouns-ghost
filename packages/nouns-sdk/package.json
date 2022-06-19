@@ -14,7 +14,7 @@
     "test": "mocha -r ts-node/register \"test/**/*.test.ts\""
   },
   "dependencies": {
-    "@nouns/contracts": "^0.1.3",
+    "@nouns/contracts": "file:../nouns-contracts",
     "ethers": "^5.6.8"
   },
   "devDependencies": {

@@ -31,13 +31,13 @@ library NFTDescriptor {
     /**
      * @notice Construct an ERC721 token URI.
      */
-    function constructTokenURI(TokenURIParams memory params, mapping(uint8 => string[]) storage palettes)
+    function constructTokenURI(TokenURIParams memory params, mapping(uint8 => string[]) storage palettes, uint8 opacity, bool voted)
         public
         view
         returns (string memory)
     {
         string memory image = generateSVGImage(
-            MultiPartRLEToSVG.SVGParams({ parts: params.parts, background: params.background }),
+            MultiPartRLEToSVG.SVGParams({ parts: params.parts, background: params.background, opacity: opacity }),
             palettes
         );
 
@@ -47,7 +47,7 @@ library NFTDescriptor {
                 'data:application/json;base64,',
                 Base64.encode(
                     bytes(
-                        abi.encodePacked('{"name":"', params.name, '", "description":"', params.description, '", "image": "', 'data:image/svg+xml;base64,', image, '"}')
+                        abi.encodePacked('{"name":"', params.name, '", "description":"', params.description, '", "image": "', 'data:image/svg+xml;base64,', image, '", "attributes": [{"trait_type": "Voted", "value":', voted ? 'true' : 'false' ,'}]}')
                     )
                 )
             )

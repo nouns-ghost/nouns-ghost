@@ -1,7 +1,7 @@
 import { ImageData as data, getNounData } from '@nouns/assets';
 import { buildSVG } from '@nouns/sdk';
 import { BigNumber as EthersBN } from 'ethers';
-import { INounSeed, useNounSeed } from '../../wrappers/nounToken';
+import { INounSeed, useNounSeed, useNounToken } from '../../wrappers/nounToken';
 import Noun from '../Noun';
 import { Link } from 'react-router-dom';
 import classes from './StandaloneNoun.module.css';
@@ -119,10 +119,11 @@ export const StandaloneNounWithSeed: React.FC<StandaloneNounWithSeedProps> = (
   const { nounId, onLoadSeed, shouldLinkToProfile } = props;
 
   const dispatch = useDispatch();
+  const nounToken = useNounToken(EthersBN.from(nounId));
   const seed = useNounSeed(nounId);
   const seedIsInvalid = Object.values(seed || {}).every(v => v === 0);
 
-  if (!seed || seedIsInvalid || !nounId || !onLoadSeed) return <Noun imgPath="" alt="Noun" />;
+  if (!nounToken || !seed || seedIsInvalid || !nounId || !onLoadSeed) return <Noun imgPath="" alt="Noun" />;
 
   onLoadSeed(seed);
 
@@ -130,7 +131,7 @@ export const StandaloneNounWithSeed: React.FC<StandaloneNounWithSeedProps> = (
     dispatch(setOnDisplayAuctionNounId(nounId.toNumber()));
   };
 
-  const { image, description } = getNoun(nounId, seed);
+  const { image, description } = nounToken;
 
   const noun = <Noun imgPath={image} alt={description} />;
   const nounWithLink = (

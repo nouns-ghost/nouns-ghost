@@ -376,6 +376,16 @@
         "internalType": "struct INounsSeeder.Seed",
         "name": "seed",
         "type": "tuple"
+      },
+      {
+        "internalType": "uint8",
+        "name": "opacity",
+        "type": "uint8"
+      },
+      {
+        "internalType": "bool",
+        "name": "voted",
+        "type": "bool"
       }
     ],
     "name": "dataURI",
@@ -422,6 +432,11 @@
         "internalType": "struct INounsSeeder.Seed",
         "name": "seed",
         "type": "tuple"
+      },
+      {
+        "internalType": "uint8",
+        "name": "opacity",
+        "type": "uint8"
       }
     ],
     "name": "generateSVGImage",
@@ -478,6 +493,16 @@
         "internalType": "struct INounsSeeder.Seed",
         "name": "seed",
         "type": "tuple"
+      },
+      {
+        "internalType": "uint8",
+        "name": "opacity",
+        "type": "uint8"
+      },
+      {
+        "internalType": "bool",
+        "name": "voted",
+        "type": "bool"
       }
     ],
     "name": "genericDataURI",
@@ -677,6 +702,16 @@
         "internalType": "struct INounsSeeder.Seed",
         "name": "seed",
         "type": "tuple"
+      },
+      {
+        "internalType": "uint8",
+        "name": "opacity",
+        "type": "uint8"
+      },
+      {
+        "internalType": "bool",
+        "name": "voted",
+        "type": "bool"
       }
     ],
     "name": "tokenURI",

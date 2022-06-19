@@ -5,6 +5,7 @@ import { solidity } from 'ethereum-waffle';
 import { NounsDescriptor__factory as NounsDescriptorFactory, NounsToken } from '../typechain';
 import { deployNounsToken, populateDescriptor } from './utils';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { base } from '../typechain/factories/contracts';
 
 chai.use(solidity);
 const { expect } = chai;
@@ -13,10 +14,11 @@ describe('NounsToken', () => {
   let nounsToken: NounsToken;
   let deployer: SignerWithAddress;
   let noundersDAO: SignerWithAddress;
+  let other: SignerWithAddress;
   let snapshotId: number;
 
   before(async () => {
-    [deployer, noundersDAO] = await ethers.getSigners();
+    [deployer, noundersDAO, other] = await ethers.getSigners();
     nounsToken = await deployNounsToken(deployer, noundersDAO.address, deployer.address);
 
     const descriptor = await nounsToken.descriptor();
@@ -33,7 +35,7 @@ describe('NounsToken', () => {
   });
 
   it('should allow the minter to mint a noun to itself and a reward noun to the noundersDAO', async () => {
-    const receipt = await (await nounsToken.mint()).wait();
+    const receipt = await (await nounsToken.mint(30)).wait();
 
     const [, , , noundersNounCreated, , , , ownersNounCreated] = receipt.events || [];
 
@@ -67,9 +69,9 @@ describe('NounsToken', () => {
   });
 
   it('should allow minter to mint a noun to itself', async () => {
-    await (await nounsToken.mint()).wait();
+    await (await nounsToken.mint(30)).wait();
 
-    const receipt = await (await nounsToken.mint()).wait();
+    const receipt = await (await nounsToken.mint(30)).wait();
     const nounCreated = receipt.events?.[3];
 
     expect(await nounsToken.ownerOf(2)).to.eq(deployer.address);
@@ -86,12 +88,12 @@ describe('NounsToken', () => {
   it('should emit two transfer logs on mint', async () => {
     const [, , creator, minter] = await ethers.getSigners();
 
-    await (await nounsToken.mint()).wait();
+    await (await nounsToken.mint(30)).wait();
 
     await (await nounsToken.setMinter(minter.address)).wait();
     await (await nounsToken.transferOwnership(creator.address)).wait();
 
-    const tx = nounsToken.connect(minter).mint();
+    const tx = nounsToken.connect(minter).mint(30);
 
     await expect(tx)
       .to.emit(nounsToken, 'Transfer')
@@ -100,7 +102,7 @@ describe('NounsToken', () => {
   });
 
   it('should allow minter to burn a noun', async () => {
-    await (await nounsToken.mint()).wait();
+    await (await nounsToken.mint(30)).wait();
 
     const tx = nounsToken.burn(0);
     await expect(tx).to.emit(nounsToken, 'NounBurned').withArgs(0);
@@ -108,7 +110,7 @@ describe('NounsToken', () => {
 
   it('should revert on non-minter mint', async () => {
     const account0AsNounErc721Account = nounsToken.connect(noundersDAO);
-    await expect(account0AsNounErc721Account.mint()).to.be.reverted;
+    await expect(account0AsNounErc721Account.mint(30)).to.be.reverted;
   });
 
   describe('contractURI', async () => {
@@ -127,5 +129,49 @@ describe('NounsToken', () => {
         'Ownable: caller is not the owner',
       );
     });
+  });
+
+  it('Should set correct opacity', async() => {
+    const validateHeaderAndGetBody = (header: string, data: string) => {
+      expect(data.indexOf(header)).eq(0);
+      return Buffer.from(data.slice(header.length), 'base64').toString();
+    }
+
+    const opacities = [5, 34, 50];
+    for(let i = 0; i < opacities.length; i++) {
+      await nounsToken.mint(opacities[i]);
+      const currentNounId = i + 1; // 1st mint generates 2 Nouns
+      const dataBase64 = await nounsToken.dataURI(currentNounId);
+
+      const dataJson = validateHeaderAndGetBody('data:application/json;base64,', dataBase64);
+      const data = JSON.parse(dataJson);
+      expect(data['name']).eq(`Noun ${currentNounId}`);
+      expect(data['description']).eq(`Noun ${currentNounId} is a member of the Nouns DAO`);
+      expect(data['attributes'][0]['trait_type']).eq('Voted');
+      expect(data['attributes'][0]['value']).eq(false);
+
+
+      const svg = validateHeaderAndGetBody('data:image/svg+xml;base64,', data['image']);
+
+      const numString = String(opacities[i]).padStart(2, '0');
+      expect(svg.indexOf(`fill-opacity="0.${numString}`)).not.eq(-1)
+    }
+  })
+
+  describe('vote', async () => {
+    it('Should vote works', async() => {
+      await (await nounsToken.mint(30)).wait();
+      console.log(nounsToken.getVote(1))
+      expect((await nounsToken.getVote(1)).valueOf()).eq(false)
+
+      await (await nounsToken.setVote(1)).wait();
+      expect((await nounsToken.getVote(1)).valueOf()).eq(true)
+
+      await expect(nounsToken.connect(other).setVote(1)).to.be.revertedWith('Sender is not the minter');
+    })
+
+    it('Should vote reverted when the signer is not a minter', async() => {
+      await expect(nounsToken.connect(other).setVote(1)).to.be.revertedWith('Sender is not the minter');
+    })
   });
 });

@@ -40,7 +40,7 @@ interface INounsToken is IERC721 {
 
     event SeederLocked();
 
-    function mint() external returns (uint256);
+    function mint(uint8 opacity) external returns (uint256);
 
     function burn(uint256 tokenId) external;
 
@@ -59,4 +59,8 @@ interface INounsToken is IERC721 {
     function setSeeder(INounsSeeder seeder) external;
 
     function lockSeeder() external;
+
+    function setVote(uint256 tokenId) external;
+
+    function getVote(uint256 tokenId) external returns (bool);
 }

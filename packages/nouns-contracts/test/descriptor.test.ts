@@ -62,7 +62,7 @@ describe('NounsDescriptor', () => {
       accessory: longest.accessories.index,
       head: longest.heads.index,
       glasses: longest.glasses.index,
-    });
+    }, 30, false);
     expect(tokenUri).to.equal(`${BASE_URI}0`);
   });
 
@@ -73,7 +73,7 @@ describe('NounsDescriptor', () => {
       accessory: longest.accessories.index,
       head: longest.heads.index,
       glasses: longest.glasses.index,
-    });
+    }, 30, false);
     const { name, description, image } = JSON.parse(
       Buffer.from(tokenUri.replace('data:application/json;base64,', ''), 'base64').toString(
         'ascii',
@@ -100,7 +100,7 @@ describe('NounsDescriptor', () => {
         accessory: Math.min(i, accessories.length - 1),
         head: Math.min(i, heads.length - 1),
         glasses: Math.min(i, glasses.length - 1),
-      });
+      }, 30, false);
       const { name, description, image } = JSON.parse(
         Buffer.from(tokenUri.replace('data:application/json;base64,', ''), 'base64').toString(
           'ascii',

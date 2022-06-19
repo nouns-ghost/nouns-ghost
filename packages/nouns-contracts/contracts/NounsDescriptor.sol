@@ -249,9 +249,9 @@ contract NounsDescriptor is INounsDescriptor, Ownable {
      * @notice Given a token ID and seed, construct a token URI for an official Nouns DAO noun.
      * @dev The returned value may be a base64 encoded data URI or an API URL.
      */
-    function tokenURI(uint256 tokenId, INounsSeeder.Seed memory seed) external view override returns (string memory) {
+    function tokenURI(uint256 tokenId, INounsSeeder.Seed memory seed, uint8 opacity, bool voted) external view override returns (string memory) {
         if (isDataURIEnabled) {
-            return dataURI(tokenId, seed);
+            return dataURI(tokenId, seed, opacity, voted);
         }
         return string(abi.encodePacked(baseURI, tokenId.toString()));
     }
@@ -259,12 +259,12 @@ contract NounsDescriptor is INounsDescriptor, Ownable {
     /**
      * @notice Given a token ID and seed, construct a base64 encoded data URI for an official Nouns DAO noun.
      */
-    function dataURI(uint256 tokenId, INounsSeeder.Seed memory seed) public view override returns (string memory) {
+    function dataURI(uint256 tokenId, INounsSeeder.Seed memory seed, uint8 opacity, bool voted) public view override returns (string memory) {
         string memory nounId = tokenId.toString();
         string memory name = string(abi.encodePacked('Noun ', nounId));
         string memory description = string(abi.encodePacked('Noun ', nounId, ' is a member of the Nouns DAO'));
 
-        return genericDataURI(name, description, seed);
+        return genericDataURI(name, description, seed, opacity, voted);
     }
 
     /**
@@ -273,7 +273,9 @@ contract NounsDescriptor is INounsDescriptor, Ownable {
     function genericDataURI(
         string memory name,
         string memory description,
-        INounsSeeder.Seed memory seed
+        INounsSeeder.Seed memory seed,
+        uint8 opacity,
+        bool voted
     ) public view override returns (string memory) {
         NFTDescriptor.TokenURIParams memory params = NFTDescriptor.TokenURIParams({
             name: name,
@@ -281,16 +283,17 @@ contract NounsDescriptor is INounsDescriptor, Ownable {
             parts: _getPartsForSeed(seed),
             background: backgrounds[seed.background]
         });
-        return NFTDescriptor.constructTokenURI(params, palettes);
+        return NFTDescriptor.constructTokenURI(params, palettes, opacity, voted);
     }
 
     /**
      * @notice Given a seed, construct a base64 encoded SVG image.
      */
-    function generateSVGImage(INounsSeeder.Seed memory seed) external view override returns (string memory) {
+    function generateSVGImage(INounsSeeder.Seed memory seed, uint8 opacity) external view override returns (string memory) {
         MultiPartRLEToSVG.SVGParams memory params = MultiPartRLEToSVG.SVGParams({
             parts: _getPartsForSeed(seed),
-            background: backgrounds[seed.background]
+            background: backgrounds[seed.background],
+            opacity: opacity
         });
         return NFTDescriptor.generateSVGImage(params, palettes);
     }
