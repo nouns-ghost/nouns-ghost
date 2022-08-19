@@ -45,7 +45,7 @@ export default function VoteOpacityPage() {
     console.log(size);
     for(let i = 0; i < size.toNumber(); i++) {
       const id = nouns![i]!.toString();
-      selection.push(<DropdownItem eventKey={id}>Noun {id}</DropdownItem>);
+      selection.push(<DropdownItem eventKey={id}>Ghost Noun {id}</DropdownItem>);
     }
   }
 

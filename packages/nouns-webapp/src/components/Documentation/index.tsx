@@ -18,13 +18,13 @@ const Documentation = () => {
       <Col lg={{ span: 10, offset: 1 }}>
         <div className={classes.headerWrapper}>
           <h1>
-            Noun Ghosts?
+            Ghost Nouns?
           </h1>
           <p className={classes.aboutText}>
-            Noun ghosts is a fork of {nounsLink}.
-            Each noun ghost has an overcity proerty which makes the image looks like a ghost.
+            "Ghost Nouns" is a fork of {nounsLink}.
+            Each ghost noun has an opacity property which makes the image looks like a ghost.
             The opacity is decided by the result of the votes.
-            One noun ghost can be used for one vote. i.e. a noun ghost is a ticket for a vote.
+            One ghost noun can be used for one vote. i.e. a ghost noun is a ticket for a vote.
           </p>
         </div>
       </Col>

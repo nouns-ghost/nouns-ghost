@@ -145,8 +145,8 @@ describe('NounsToken', () => {
 
       const dataJson = validateHeaderAndGetBody('data:application/json;base64,', dataBase64);
       const data = JSON.parse(dataJson);
-      expect(data['name']).eq(`Noun ${currentNounId}`);
-      expect(data['description']).eq(`Noun ${currentNounId} is a member of the Nouns DAO`);
+      expect(data['name']).eq(`Ghost Noun ${currentNounId}`);
+      expect(data['description']).eq(`Ghost Noun ${currentNounId} is a member of the Ghost Nouns`);
       expect(data['attributes'][0]['trait_type']).eq('Voted');
       expect(data['attributes'][0]['value']).eq(false);
 
