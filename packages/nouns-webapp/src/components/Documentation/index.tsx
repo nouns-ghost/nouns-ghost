@@ -13,9 +13,6 @@ const Documentation = () => {
       leavesPage={true}
     />
   );
-  const playgroundLink = (
-    <Link text={<Trans>Playground</Trans>} url="/playground" leavesPage={false} />
-  );
   const publicDomainLink = (
     <Link
       text={<Trans>public domain</Trans>}
@@ -47,7 +44,7 @@ const Documentation = () => {
           </p>
           <p className={classes.aboutText} style={{ paddingBottom: '4rem' }}>
             <Trans>
-              Learn more below, or start creating Nouns off-chain using the {playgroundLink}.
+              !dummy
             </Trans>
           </p>
         </div>
@@ -196,7 +193,7 @@ const Documentation = () => {
                 </li>
               </ul>
               <Trans>
-                You can experiment with off-chain Noun generation at the {playgroundLink}.
+                !dummy
               </Trans>
             </Accordion.Body>
           </Accordion.Item>
