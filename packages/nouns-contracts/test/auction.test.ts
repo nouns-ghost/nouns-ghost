@@ -456,7 +456,7 @@ describe('NounsAuctionHouse', () => {
       await (await nounsAuctionHouse.connect(bidderB).settleCurrentAndCreateNewAuction()).wait();
 
       const opacityIndex = await nounsAuctionHouse.opacityIndex();
-      expect(opacityIndex).equal(Math.min(...voteFor));
+      expect(opacityIndex).equal(Math.max(...voteFor));
     });
 
     it('non-tie votes', async () => {

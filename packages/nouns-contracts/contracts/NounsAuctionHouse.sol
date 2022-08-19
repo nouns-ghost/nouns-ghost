@@ -291,13 +291,13 @@ contract NounsAuctionHouse is INounsAuctionHouse, PausableUpgradeable, Reentranc
 
     /**
      * @notice Calculate opacity index from current vote
-     * @dev minmun index is returned when it's tie
+     * @dev max index is returned when it's tie
      */
      function _calculateOpacityIndex() internal view returns (uint8) {
         uint8 index = 0;
         uint256 max = 0;
         for (uint8 i = 0; i < opacities.length; i++) {
-            if (votes[i] > max) {
+            if (votes[i] >= max) {
                 index = i;
                 max = votes[i];
             }
