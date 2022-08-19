@@ -22,9 +22,6 @@ task('update-configs', 'Write the deployed addresses to the SDK and subgraph con
         nounsAuctionHouse: contracts.NounsAuctionHouse.address,
         nounsAuctionHouseProxy: contracts.NounsAuctionHouseProxy.address,
         nounsAuctionHouseProxyAdmin: contracts.NounsAuctionHouseProxyAdmin.address,
-        nounsDaoExecutor: contracts.NounsDAOExecutor.address,
-        nounsDAOProxy: contracts.NounsDAOProxy.address,
-        nounsDAOLogicV1: contracts.NounsDAOLogicV1.address,
       };
       writeFileSync(addressesPath, JSON.stringify(addresses, null, 2));
       try {
@@ -48,10 +45,6 @@ task('update-configs', 'Write the deployed addresses to the SDK and subgraph con
         nounsAuctionHouse: {
           address: contracts.NounsAuctionHouseProxy.address,
           startBlock: contracts.NounsAuctionHouseProxy.instance.deployTransaction.blockNumber,
-        },
-        nounsDAO: {
-          address: contracts.NounsDAOProxy.address,
-          startBlock: contracts.NounsDAOProxy.instance.deployTransaction.blockNumber,
         },
       };
       writeFileSync(subgraphConfigPath, JSON.stringify(subgraphConfig, null, 2));

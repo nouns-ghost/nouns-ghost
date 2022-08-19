@@ -19,11 +19,6 @@ task('deploy-and-configure', 'Deploy and configure all contracts')
     'The auction min increment bid percentage (out of 100)',
   )
   .addOptionalParam('auctionDuration', 'The auction duration (seconds)')
-  .addOptionalParam('timelockDelay', 'The timelock delay (seconds)')
-  .addOptionalParam('votingPeriod', 'The voting period (blocks)')
-  .addOptionalParam('votingDelay', 'The voting delay (blocks)')
-  .addOptionalParam('proposalThresholdBps', 'The proposal threshold (basis points)')
-  .addOptionalParam('quorumVotesBps', 'Votes required for quorum (basis points)')
   .setAction(async (args, { run }) => {
     // Deploy the Nouns DAO contracts and return deployment information
     const contracts = await run('deploy', args);
@@ -39,16 +34,6 @@ task('deploy-and-configure', 'Deploy and configure all contracts')
       nounsDescriptor: contracts.NounsDescriptor.address,
     });
 
-    // Transfer ownership of all contract except for the auction house.
-    // We must maintain ownership of the auction house to kick off the first auction.
-    const executorAddress = contracts.NounsDAOExecutor.address;
-    await contracts.NounsDescriptor.instance.transferOwnership(executorAddress);
-    await contracts.NounsToken.instance.transferOwnership(executorAddress);
-    await contracts.NounsAuctionHouseProxyAdmin.instance.transferOwnership(executorAddress);
-    console.log(
-      'Transferred ownership of the descriptor, token, and proxy admin contracts to the executor.',
-    );
-
     // Optionally kick off the first auction and transfer ownership of the auction house
     // to the Nouns DAO executor.
     if (args.startAuction) {
@@ -58,7 +43,6 @@ task('deploy-and-configure', 'Deploy and configure all contracts')
       await auctionHouse.unpause({
         gasLimit: 1_000_000,
       });
-      await auctionHouse.transferOwnership(executorAddress);
       console.log(
         'Started the first auction and transferred ownership of the auction house to the executor.',
       );

@@ -27,8 +27,6 @@ task('deploy-local', 'Deploy contracts to hardhat')
   .addOptionalParam('timelockDelay', 'The timelock delay (seconds)', 60 * 60 * 24 * 2, types.int) // Default: 2 days
   .addOptionalParam('votingPeriod', 'The voting period (blocks)', 4 * 60 * 24 * 3, types.int) // Default: 3 days
   .addOptionalParam('votingDelay', 'The voting delay (blocks)', 1, types.int) // Default: 1 block
-  .addOptionalParam('proposalThresholdBps', 'The proposal threshold (basis points)', 500, types.int) // Default: 5%
-  .addOptionalParam('quorumVotesBps', 'Votes required for quorum (basis points)', 1_000, types.int) // Default: 10%
   .setAction(async (args, { ethers }) => {
     const network = await ethers.provider.getNetwork();
     if (network.chainId !== 31337) {
@@ -39,14 +37,9 @@ task('deploy-local', 'Deploy contracts to hardhat')
     const proxyRegistryAddress = '0xa5409ec958c83c3f309868babaca7c86dcb077c1';
 
     const AUCTION_HOUSE_PROXY_NONCE_OFFSET = 7;
-    const GOVERNOR_N_DELEGATOR_NONCE_OFFSET = 10;
 
     const [deployer] = await ethers.getSigners();
     const nonce = await deployer.getTransactionCount();
-    const expectedNounsDAOProxyAddress = ethers.utils.getContractAddress({
-      from: deployer.address,
-      nonce: nonce + GOVERNOR_N_DELEGATOR_NONCE_OFFSET,
-    });
     const expectedAuctionHouseProxyAddress = ethers.utils.getContractAddress({
       from: deployer.address,
       nonce: nonce + AUCTION_HOUSE_PROXY_NONCE_OFFSET,
@@ -85,28 +78,9 @@ task('deploy-local', 'Deploy contracts to hardhat')
               args.auctionReservePrice,
               args.auctionMinIncrementBidPercentage,
               args.auctionDuration,
-              [10, 25, 30, 35, 40],
-              2,
+              [10, 20, 30, 40, 50],
+              0,
             ]),
-        ],
-      },
-      NounsDAOExecutor: {
-        args: [expectedNounsDAOProxyAddress, args.timelockDelay],
-      },
-      NounsDAOLogicV1: {
-        waitForConfirmation: true,
-      },
-      NounsDAOProxy: {
-        args: [
-          () => contracts.NounsDAOExecutor.instance?.address,
-          () => contracts.NounsToken.instance?.address,
-          args.noundersdao || deployer.address,
-          () => contracts.NounsDAOExecutor.instance?.address,
-          () => contracts.NounsDAOLogicV1.instance?.address,
-          args.votingPeriod,
-          args.votingDelay,
-          args.proposalThresholdBps,
-          args.quorumVotesBps,
         ],
       },
     };
