@@ -17,6 +17,7 @@ export default function VoteOpacityPage() {
   const { library } = useEthers();
   const [ selectedNoun, setSelectedNoun] = useState(0);
   const [ selectedOpacity, setSelectedOpacity] = useState(-1);
+  const stateBgColor = useAppSelector(state => state.application.stateBackgroundColor);
 
   const activeAccount = useAppSelector(state => state.account.activeAccount);
 
@@ -71,7 +72,8 @@ export default function VoteOpacityPage() {
   }
 
   return(
-    <Section fullWidth={false} >
+    <div style={{ backgroundColor: stateBgColor }}>
+    <Section fullWidth={false}>
       <Row>
         <h1 className={classes.headerWrapper}>Let's Vote opacity!</h1>
       </Row>
@@ -111,5 +113,6 @@ export default function VoteOpacityPage() {
         </Col>
       </Row>
     </Section>
+    </div>
   );
 }

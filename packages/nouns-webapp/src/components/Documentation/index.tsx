@@ -13,6 +13,7 @@ const Documentation = () => {
     />
   );
   return (
+    <div style={{backgroundColor: "#404455"}}>
     <Section fullWidth={false}>
       <Col lg={{ span: 10, offset: 1 }}>
         <div className={classes.headerWrapper}>
@@ -28,6 +29,7 @@ const Documentation = () => {
         </div>
       </Col>
     </Section>
+    </div>
   );
 };
 export default Documentation;
