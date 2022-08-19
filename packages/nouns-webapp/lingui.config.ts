@@ -17,7 +17,7 @@ const linguiConfig = {
   formatOptions: {
     lineNumbers: false,
   },
-  locales: ['en-US', 'ja-JP', 'pseudo'],
+  locales: ['en-US', 'pseudo'],
   orderBy: 'messageId',
   rootDir: '.',
   runtimeConfigModule: ['@lingui/core', 'i18n'],

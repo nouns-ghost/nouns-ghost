@@ -22,11 +22,9 @@ const Winner: React.FC<WinnerProps> = props => {
   const isWinnerYou =
     activeAccount !== undefined && activeAccount.toLocaleLowerCase() === winner.toLocaleLowerCase();
 
-  const activeLocale = useActiveLocale();
-
   const nonNounderNounContent = isWinnerYou ? (
     <Row className={classes.youSection}>
-      <Col lg={activeLocale === 'ja-JP' ? 8 : 4} className={classes.youCopy}>
+      <Col lg={4} className={classes.youCopy}>
         <h2
           className={classes.winnerContent}
           style={{

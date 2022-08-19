@@ -259,11 +259,7 @@ const Bid: React.FC<{
               {!auctionEnded && !bidInput ? (
                 <>
                   Ξ {minBidEth(minBid)}{' '}
-                  <span
-                    className={
-                      activeLocale === 'ja-JP' ? responsiveUiUtilsClasses.disableSmallScreens : ''
-                    }
-                  >
+                  <span>
                     <Trans>or more</Trans>
                   </span>
                 </>

@@ -19,8 +19,6 @@ import { Trans } from '@lingui/macro';
 import {
   shortENS,
   useShortAddress,
-  veryShortAddress,
-  veryShortENS,
 } from '../../utils/addressAndENSDisplayUtils';
 import { useActiveLocale } from '../../hooks/useActivateLocale';
 import responsiveUiUtilsClasses from '../../utils/ResponsiveUIUtils.module.css';
@@ -184,16 +182,10 @@ const NavWallet: React.FC<NavWalletProps> = props => {
   });
 
   const renderENS = (ens: string) => {
-    if (activeLocale === 'ja-JP') {
-      return veryShortENS(ens);
-    }
     return shortENS(ens);
   };
 
   const renderAddress = (address: string) => {
-    if (activeLocale === 'ja-JP') {
-      return veryShortAddress(address);
-    }
     return shortAddress;
   };
 
