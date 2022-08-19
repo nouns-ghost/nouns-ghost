@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ReactNode } from 'react';
-import { grey } from '../../utils/nounBgColors';
+import { blue } from '../../utils/nounBgColors';
 
 export interface AlertModal {
   show: boolean;
@@ -15,7 +15,7 @@ interface ApplicationState {
 }
 
 const initialState: ApplicationState = {
-  stateBackgroundColor: grey,
+  stateBackgroundColor: blue,
   isCoolBackground: true,
   alertModal: {
     show: false,
@@ -28,7 +28,7 @@ export const applicationSlice = createSlice({
   reducers: {
     setStateBackgroundColor: (state, action: PayloadAction<string>) => {
       state.stateBackgroundColor = action.payload;
-      state.isCoolBackground = action.payload === grey;
+      state.isCoolBackground = action.payload === blue;
     },
     setAlertModal: (state, action: PayloadAction<AlertModal>) => {
       state.alertModal = action.payload;

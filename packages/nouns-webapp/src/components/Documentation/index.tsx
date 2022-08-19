@@ -13,7 +13,7 @@ const Documentation = () => {
     />
   );
   return (
-    <div style={{backgroundColor: "#404455"}}>
+    <div className={classes.body} style={{backgroundColor: "#404455"}}>
     <Section fullWidth={false}>
       <Col lg={{ span: 10, offset: 1 }}>
         <div className={classes.headerWrapper}>

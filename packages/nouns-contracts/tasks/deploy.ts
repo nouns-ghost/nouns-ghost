@@ -132,7 +132,7 @@ task('deploy', 'Deploys NFTDescriptor, NounsDescriptor, NounsSeeder, and NounsTo
               args.auctionReservePrice,
               args.auctionMinIncrementBidPercentage,
               args.auctionDuration,
-              [10, 20, 30, 40, 50],
+              [5, 10, 20, 30, 40],
               4,
             ]),
         ],

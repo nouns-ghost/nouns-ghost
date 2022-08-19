@@ -38,8 +38,7 @@ const getNoun = (nounId: string | EthersBN, seed: INounSeed) => {
 
 const StandaloneNoun: React.FC<StandaloneNounProps> = (props: StandaloneNounProps) => {
   const { nounId } = props;
-  const seed = useNounSeed(nounId);
-  const noun = seed && getNoun(nounId, seed);
+  const nounToken = useNounToken(EthersBN.from(nounId));
 
   const dispatch = useDispatch();
 
@@ -47,13 +46,17 @@ const StandaloneNoun: React.FC<StandaloneNounProps> = (props: StandaloneNounProp
     dispatch(setOnDisplayAuctionNounId(nounId.toNumber()));
   };
 
+  if (!nounToken) return <Noun imgPath="" alt="Noun" />;
+
+  const { image, description } = nounToken;
+
   return (
     <Link
       to={'/noun/' + nounId.toString()}
       className={classes.clickableNoun}
       onClick={onClickHandler}
     >
-      <Noun imgPath={noun ? noun.image : ''} alt={noun ? noun.description : 'Noun'} />
+      <Noun imgPath={image} alt={description} />
     </Link>
   );
 };
@@ -62,13 +65,16 @@ export const StandaloneNounCircular: React.FC<StandaloneCircularNounProps> = (
   props: StandaloneCircularNounProps,
 ) => {
   const { nounId } = props;
-  const seed = useNounSeed(nounId);
-  const noun = seed && getNoun(nounId, seed);
+  const nounToken = useNounToken(EthersBN.from(nounId));
 
   const dispatch = useDispatch();
   const onClickHandler = () => {
     dispatch(setOnDisplayAuctionNounId(nounId.toNumber()));
   };
+
+  if (!nounToken) return <Noun imgPath="" alt="Noun" />;
+
+  const { image, description } = nounToken;
 
   return (
     <Link
@@ -77,8 +83,8 @@ export const StandaloneNounCircular: React.FC<StandaloneCircularNounProps> = (
       onClick={onClickHandler}
     >
       <Noun
-        imgPath={noun ? noun.image : ''}
-        alt={noun ? noun.description : 'Noun'}
+        imgPath={image}
+        alt={description}
         wrapperClassName={nounClasses.circularNounWrapper}
         className={nounClasses.circular}
       />
@@ -90,13 +96,16 @@ export const StandaloneNounRoundedCorners: React.FC<StandaloneNounProps> = (
   props: StandaloneNounProps,
 ) => {
   const { nounId } = props;
-  const seed = useNounSeed(nounId);
-  const noun = seed && getNoun(nounId, seed);
+  const nounToken = useNounToken(EthersBN.from(nounId));
 
   const dispatch = useDispatch();
   const onClickHandler = () => {
     dispatch(setOnDisplayAuctionNounId(nounId.toNumber()));
   };
+
+  if (!nounToken) return <Noun imgPath="" alt="Noun" />;
+
+  const { image, description } = nounToken;
 
   return (
     <Link
@@ -105,8 +114,8 @@ export const StandaloneNounRoundedCorners: React.FC<StandaloneNounProps> = (
       onClick={onClickHandler}
     >
       <Noun
-        imgPath={noun ? noun.image : ''}
-        alt={noun ? noun.description : 'Noun'}
+        imgPath={image}
+        alt={description}
         className={nounClasses.rounded}
       />
     </Link>

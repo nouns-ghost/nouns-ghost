@@ -24,9 +24,6 @@ task('deploy-local', 'Deploy contracts to hardhat')
     types.int,
   )
   .addOptionalParam('auctionDuration', 'The auction duration (seconds)', 60 * 2, types.int) // Default: 2 minutes
-  .addOptionalParam('timelockDelay', 'The timelock delay (seconds)', 60 * 60 * 24 * 2, types.int) // Default: 2 days
-  .addOptionalParam('votingPeriod', 'The voting period (blocks)', 4 * 60 * 24 * 3, types.int) // Default: 3 days
-  .addOptionalParam('votingDelay', 'The voting delay (blocks)', 1, types.int) // Default: 1 block
   .setAction(async (args, { ethers }) => {
     const network = await ethers.provider.getNetwork();
     if (network.chainId !== 31337) {
@@ -78,8 +75,8 @@ task('deploy-local', 'Deploy contracts to hardhat')
               args.auctionReservePrice,
               args.auctionMinIncrementBidPercentage,
               args.auctionDuration,
-              [10, 20, 30, 40, 50],
-              0,
+              [5, 10, 20, 30, 40],
+              4,
             ]),
         ],
       },

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useAppSelector } from '../../hooks';
 import { useEthers, useContractFunction } from '@usedapp/core';
 import { NounsAuctionHouseFactory } from '@nouns/sdk';
@@ -25,7 +25,7 @@ export default function VoteOpacityPage() {
     config.addresses.nounsAuctionHouseProxy,
   );
 
-  const { send: vote, state: voteState } = useContractFunction(
+  const { send: vote } = useContractFunction(
     nounsAuctionHouseContract,
     AuctionHouseContractFunction.vote,
   );
@@ -62,11 +62,11 @@ export default function VoteOpacityPage() {
   const candidates = () => {
     return(
       <Form className={classes.voteOption}>
-        <Form.Check name="opacity" type="radio" id="0" label="10%" onChange={()=>{setSelectedOpacity(0)}} />
-        <Form.Check name="opacity" type="radio" id="1" label="20%" onChange={()=>{setSelectedOpacity(1)}} />
-        <Form.Check name="opacity" type="radio" id="2" label="30%" onChange={()=>{setSelectedOpacity(2)}} />
-        <Form.Check name="opacity" type="radio" id="3" label="40%" onChange={()=>{setSelectedOpacity(3)}} />
-        <Form.Check name="opacity" type="radio" id="4" label="50%" onChange={()=>{setSelectedOpacity(4)}} />
+        <Form.Check name="opacity" type="radio" id="0" label="5%" onChange={()=>{setSelectedOpacity(0)}} />
+        <Form.Check name="opacity" type="radio" id="1" label="10%" onChange={()=>{setSelectedOpacity(1)}} />
+        <Form.Check name="opacity" type="radio" id="2" label="20%" onChange={()=>{setSelectedOpacity(2)}} />
+        <Form.Check name="opacity" type="radio" id="3" label="30%" onChange={()=>{setSelectedOpacity(3)}} />
+        <Form.Check name="opacity" type="radio" id="4" label="40%" onChange={()=>{setSelectedOpacity(4)}} />
       </Form>
     )
   }
@@ -104,7 +104,7 @@ export default function VoteOpacityPage() {
           <Row>
             <Button type="button"
              className={classes.voteBtn}
-             disabled={selectedOpacity == -1} onClick={async () =>{
+             disabled={selectedOpacity === -1} onClick={async () =>{
                 await doVote(selectedNoun, selectedOpacity);
             }}>
               Vote!
