@@ -1,0 +1,54 @@
+h1 {
+  font-family: 'Londrina Solid';
+  font-size: 4rem;
+}
+
+p {
+  font-family: 'PT Root UI', sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.25px;
+  line-height: 28px;
+  margin: 3rem 0;
+}
+
+.nounBtn {
+  font-family: 'PT Root UI';
+  border-radius: 12px !important;
+  margin-left: 0.6rem !important;
+  margin-top: 3px;
+  width: auto;
+  padding: 10px 16px;
+  height: 3rem;
+  color: white;
+  border: transparent;
+  background-color: var(--brand-black);
+  font-weight: bold;
+  letter-spacing: normal;
+  font-size: 19px;
+  transition: all 0.2s ease-in-out;
+}
+
+.voteOption {
+  margin: 15px;
+}
+
+.voteBtn {
+  font-family: 'PT Root UI';
+  border-radius: 12px !important;
+  margin-left: 0.6rem !important;
+  margin-top: 3px;
+  width: auto;
+  padding: 10px 16px;
+  height: 3rem;
+  color: white;
+  border: transparent;
+  background-color: var(--brand-black);
+  font-weight: bold;
+  letter-spacing: normal;
+  font-size: 19px;
+  transition: all 0.2s ease-in-out;
+}
+
+.voteBtn:disabled {
+  cursor: not-allowed;
+}

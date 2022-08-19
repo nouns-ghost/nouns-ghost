@@ -8,7 +8,7 @@ import testnetNoun from '../../assets/testnet-noun.png';
 import { CHAIN_ID } from '../../config';
 import NavBarButton, { NavBarButtonStyle } from '../NavBarButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay } from '@fortawesome/free-solid-svg-icons';
+import { faVoteYea } from '@fortawesome/free-solid-svg-icons';
 import NavWallet from '../NavWallet';
 import { Trans } from '@lingui/macro';
 import React, { useState } from 'react';
@@ -67,7 +67,7 @@ const NavBar = () => {
             >
               <NavBarButton
                 buttonText={<Trans>Vote Opacity</Trans>}
-                buttonIcon={<FontAwesomeIcon icon={faPlay} />}
+                buttonIcon={<FontAwesomeIcon icon={faVoteYea} />}
                 buttonStyle={nonWalletButtonStyle}
               />
             </Nav.Link>

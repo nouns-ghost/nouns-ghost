@@ -5,11 +5,13 @@ import { NounsAuctionHouseFactory } from '@nouns/sdk';
 import { AuctionHouseContractFunction } from '../../wrappers/nounsAuction';
 import { useNounToken, useTokenOfOwnerNotVoted } from '../../wrappers/nounToken';
 import { connectContractToSigner } from '@usedapp/core/dist/cjs/src/hooks';
-import { Button, DropdownButton, Form } from 'react-bootstrap';
+import { Button, DropdownButton, Form, Row, Col } from 'react-bootstrap';
 import { BigNumber as EthersBN } from 'ethers';
 import config from '../../config';
 import DropdownItem from 'react-bootstrap/esm/DropdownItem';
 import Noun from '../../components/Noun';
+import Section from '../../layout/Section';
+import classes from './VoteOpacity.module.css';
 
 export default function VoteOpacityPage() {
   const { library } = useEthers();
@@ -58,36 +60,56 @@ export default function VoteOpacityPage() {
 
   const candidates = () => {
     return(
-      <>
-      <Form>
+      <Form className={classes.voteOption}>
         <Form.Check name="opacity" type="radio" id="0" label="10%" onChange={()=>{setSelectedOpacity(0)}} />
         <Form.Check name="opacity" type="radio" id="1" label="20%" onChange={()=>{setSelectedOpacity(1)}} />
         <Form.Check name="opacity" type="radio" id="2" label="30%" onChange={()=>{setSelectedOpacity(2)}} />
         <Form.Check name="opacity" type="radio" id="3" label="40%" onChange={()=>{setSelectedOpacity(3)}} />
         <Form.Check name="opacity" type="radio" id="4" label="50%" onChange={()=>{setSelectedOpacity(4)}} />
       </Form>
-      </>
     )
   }
 
   return(
-    <>
-        <h1>Vote opacity!!</h1>
-        <p>By consuming your noun, you can vote the opacity for the next mint! The nonuce is marked as "voted" and you cannot use it for vote.</p>
-        <DropdownButton  title="Select your noun for vote" onSelect={onSelect}>
+    <Section fullWidth={false} >
+      <Row>
+        <h1 className={classes.headerWrapper}>Let's Vote opacity!</h1>
+      </Row>
+      <Row>
+        <p>
+          By consuming your noun, you can vote the opacity for the next mint!<br/>
+          Pleae note that consumed nonuce is marked as "voted" and you cannot reuse it for vote any more. But no worries, the noun is still yours.
+        </p>
+      </Row>
+      <Row>
+        <DropdownButton title="Select your noun to vote" onSelect={onSelect} size="lg">
           {
             selection
           }
         </DropdownButton>
-        <div style={{width: '100px'}}>
-          <Noun imgPath={image} alt={description} />
-        </div>
-        {candidates()}
-        <Button type="button" disabled={selectedOpacity == -1} onClick={async () =>{
-            await doVote(selectedNoun, selectedOpacity);
-        }}>vote</Button>
-        <Button type="button" onClick={async () =>{
-        }}>debug</Button>
-    </>
+      </Row>
+      <Row>
+        <Col>
+          <div style={{width: '300px'}}>
+            <Noun imgPath={image} alt={description} />
+          </div>
+        </Col>
+        <Col>
+          <Row>
+            <div>Select the opacity below</div>
+            {candidates()}
+          </Row>
+          <Row>
+            <Button type="button"
+             className={classes.voteBtn}
+             disabled={selectedOpacity == -1} onClick={async () =>{
+                await doVote(selectedNoun, selectedOpacity);
+            }}>
+              Vote!
+            </Button>
+          </Row>
+        </Col>
+      </Row>
+    </Section>
   );
 }
