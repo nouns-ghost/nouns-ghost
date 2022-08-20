@@ -32,6 +32,7 @@
 .accordionItem {
   margin-bottom: 2.5rem;
   border: none;
+  background-color: #404455;
 }
 
 .aboutText {
