@@ -47,7 +47,7 @@ library NFTDescriptor {
                 'data:application/json;base64,',
                 Base64.encode(
                     bytes(
-                        abi.encodePacked('{"name":"', params.name, '", "description":"', params.description, '", "image": "', 'data:image/svg+xml;base64,', image, '", "attributes": [{"trait_type": "Voted", "value":', voted ? 'true' : 'false' ,'}]}')
+                        abi.encodePacked('{"name":"', params.name, '", "description":"', params.description, '", "image": "', 'data:image/svg+xml;base64,', image, '", "attributes": [{"trait_type": "Vote status", "value": ', voted ? '"used"' : '"unused"' ,'}]}')
                     )
                 )
             )

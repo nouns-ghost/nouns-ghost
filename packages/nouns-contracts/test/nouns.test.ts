@@ -147,8 +147,8 @@ describe('NounsToken', () => {
       const data = JSON.parse(dataJson);
       expect(data['name']).eq(`Ghost Noun ${currentNounId}`);
       expect(data['description']).eq(`Ghost Noun ${currentNounId} is a member of the Ghost Nouns`);
-      expect(data['attributes'][0]['trait_type']).eq('Voted');
-      expect(data['attributes'][0]['value']).eq(false);
+      expect(data['attributes'][0]['trait_type']).eq('Vote status');
+      expect(data['attributes'][0]['value']).eq('unused');
 
 
       const svg = validateHeaderAndGetBody('data:image/svg+xml;base64,', data['image']);
