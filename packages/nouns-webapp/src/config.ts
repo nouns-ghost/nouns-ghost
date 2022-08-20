@@ -17,7 +17,7 @@ interface AppConfig {
   enableHistory: boolean;
 }
 
-type SupportedChains = ChainId.Rinkeby | ChainId.Mainnet | ChainId.Hardhat;
+type SupportedChains = ChainId.Rinkeby | ChainId.Mainnet | ChainId.Hardhat | ChainId.Localhost;
 
 interface CacheBucket {
   name: string;
@@ -70,6 +70,12 @@ const app: Record<SupportedChains, AppConfig> = {
     subgraphApiUri: '',
     enableHistory: false,
   },
+  [ChainId.Localhost]: {
+    jsonRpcUri: 'http://localhost:18545',
+    wsRpcUri: 'ws://localhost:18546',
+    subgraphApiUri: '',
+    enableHistory: false,
+  },
 };
 
 const externalAddresses: Record<SupportedChains, ExternalContractAddresses> = {
@@ -80,6 +86,9 @@ const externalAddresses: Record<SupportedChains, ExternalContractAddresses> = {
     lidoToken: '0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84',
   },
   [ChainId.Hardhat]: {
+    lidoToken: undefined,
+  },
+  [ChainId.Localhost]: {
     lidoToken: undefined,
   },
 };

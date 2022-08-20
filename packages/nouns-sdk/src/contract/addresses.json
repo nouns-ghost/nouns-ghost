@@ -25,5 +25,14 @@
     "nounsAuctionHouse": "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707",
     "nounsAuctionHouseProxy": "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853",
     "nounsAuctionHouseProxyAdmin": "0x0165878A594ca255338adfa4d48449f69242Eb8F"
+  },
+  "1337": {
+    "nounsToken": "0x9BF00d8F537Fa9971eC85C2009502397b9712178",
+    "nounsSeeder": "0xb06D0be86180deb972a471b50BCDE51091f1d314",
+    "nounsDescriptor": "0x7760ac41F8F91b659aD924035e70628608355FD1",
+    "nftDescriptor": "0x4fE2273A93bf2746b0d4110D9097750848f4F0Cc",
+    "nounsAuctionHouse": "0xe556e6BF8DE659c31bc9efE507c9cd4B773bfeC8",
+    "nounsAuctionHouseProxy": "0x6a0F78DBE4121DFa51fB5D7A1275826687FF0Ad6",
+    "nounsAuctionHouseProxyAdmin": "0x4404968234f014AB65B6f1548F616be600A1ed5E"
   }
 }

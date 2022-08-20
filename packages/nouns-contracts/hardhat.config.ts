@@ -36,6 +36,10 @@ const config: HardhatUserConfig = {
     hardhat: {
       initialBaseFeePerGas: 0,
     },
+    localhost: {
+      url: `http://localhost:18545`,
+      accounts: [process.env.WALLET_PRIVATE_KEY!].filter(Boolean),
+    },
   },
   etherscan: {
     apiKey: process.env.ETHERSCAN_API_KEY,
