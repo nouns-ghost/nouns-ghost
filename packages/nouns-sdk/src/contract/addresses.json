@@ -9,13 +9,13 @@
     "nounsAuctionHouseProxyAdmin": "0xC1C119932d78aB9080862C5fcb964029f086401e"
   },
   "4": {
-    "nounsToken": "0x6d4B9317D31Cb515535094F4CD1Bb3EDa444F494",
-    "nounsSeeder": "0xbc072057D5a4803E7b520f6d853481Aa29F49c9A",
-    "nounsDescriptor": "0x67B315696f4bF0bBEDC36951930D8B77df871735",
-    "nftDescriptor": "0xb7b8ab67AE2Df909413Df5fbAfB108805a153d3e",
-    "nounsAuctionHouse": "0xeBB790EEe260f11b6f423E9FA182C1712d989aEA",
-    "nounsAuctionHouseProxy": "0x56781Ee82De6326a999711524F50fd248894ed86",
-    "nounsAuctionHouseProxyAdmin": "0xC132DDEfD4585ccA39968Fa007dd6E47281B2809"
+    "nounsToken": "0x73199d47c74E0FCaE354C0A9B6456D4bf2aD4195",
+    "nounsSeeder": "0xB7Ce7b26382681eFCCa36264f9213Eb802b93D62",
+    "nounsDescriptor": "0x2F1f807a6Cd6759252A1AE1c0Bf3DB29fb415355",
+    "nftDescriptor": "0xad0b867DD9C3B0f6Fe28385c4EC6aC7165525c94",
+    "nounsAuctionHouse": "0xeE1C7FDEcB40a28692E2C3E529d2FD5b8Aba5FDD",
+    "nounsAuctionHouseProxy": "0xbaB5F275FAF5170c004a7A762c9a2fB80d78b0CB",
+    "nounsAuctionHouseProxyAdmin": "0x4B68D8e45Ebd46bBB07968Fac683F972Bb2a1CB2"
   },
   "31337": {
     "nounsToken": "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
