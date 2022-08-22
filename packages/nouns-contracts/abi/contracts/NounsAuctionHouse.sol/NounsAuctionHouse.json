@@ -50,6 +50,12 @@
         "internalType": "uint256",
         "name": "endTime",
         "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint8",
+        "name": "opacity",
+        "type": "uint8"
       }
     ],
     "name": "AuctionCreated",
@@ -216,6 +222,11 @@
         "internalType": "bool",
         "name": "settled",
         "type": "bool"
+      },
+      {
+        "internalType": "uint8",
+        "name": "opacity",
+        "type": "uint8"
       }
     ],
     "stateMutability": "view",

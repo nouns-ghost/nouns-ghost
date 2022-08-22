@@ -352,7 +352,8 @@ describe('NounsAuctionHouse', () => {
     it('happy path', async () => {
       await (await nounsAuctionHouse.unpause()).wait();
 
-      const { nounId } = await nounsAuctionHouse.auction();
+      const { nounId, opacity } = await nounsAuctionHouse.auction();
+      expect(opacity).to.equal(30)
 
       await (await nounsAuctionHouse.connect(bidderA).createBid(nounId, {value: RESERVE_PRICE + 1,})).wait();
 

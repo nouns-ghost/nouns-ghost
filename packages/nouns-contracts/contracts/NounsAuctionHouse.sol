@@ -232,10 +232,11 @@ contract NounsAuctionHouse is INounsAuctionHouse, PausableUpgradeable, Reentranc
                 startTime: startTime,
                 endTime: endTime,
                 bidder: payable(0),
-                settled: false
+                settled: false,
+                opacity: opacities[opacityIndex]
             });
 
-            emit AuctionCreated(nounId, startTime, endTime);
+            emit AuctionCreated(nounId, startTime, endTime, opacities[opacityIndex]);
         } catch Error(string memory) {
             _pause();
         }

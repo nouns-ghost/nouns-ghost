@@ -31,9 +31,11 @@ interface INounsAuctionHouse {
         address payable bidder;
         // Whether or not the auction has been settled
         bool settled;
+        // Opacity
+        uint8 opacity;
     }
 
-    event AuctionCreated(uint256 indexed nounId, uint256 startTime, uint256 endTime);
+    event AuctionCreated(uint256 indexed nounId, uint256 startTime, uint256 endTime, uint8 opacity);
 
     event AuctionBid(uint256 indexed nounId, address sender, uint256 value, bool extended);
 
