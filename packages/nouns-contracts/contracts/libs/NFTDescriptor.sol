@@ -18,6 +18,7 @@
 pragma solidity ^0.8.6;
 
 import { Base64 } from 'base64-sol/base64.sol';
+import { Strings } from '@openzeppelin/contracts/utils/Strings.sol';
 import { MultiPartRLEToSVG } from './MultiPartRLEToSVG.sol';
 
 library NFTDescriptor {
@@ -47,7 +48,7 @@ library NFTDescriptor {
                 'data:application/json;base64,',
                 Base64.encode(
                     bytes(
-                        abi.encodePacked('{"name":"', params.name, '", "description":"', params.description, '", "image": "', 'data:image/svg+xml;base64,', image, '", "attributes": [{"trait_type": "Vote status", "value": ', voted ? '"used"' : '"unused"' ,'}]}')
+                        abi.encodePacked('{"name":"', params.name, '", "description":"', params.description, '", "image": "', 'data:image/svg+xml;base64,', image, '", "attributes": [{"trait_type": "Vote status", "value": ', voted ? '"used"' : '"unused"' ,'}, {"trait_type": "Opacity", "value": "', Strings.toString(opacity),'%"}]}')
                     )
                 )
             )
