@@ -72,6 +72,7 @@ const Auction: React.FC<AuctionProps> = props => {
     <NounderNounContent
       mintTimestamp={currentAuction.startTime}
       nounId={currentAuction.nounId}
+      opacity={currentAuction.opacity}
       isFirstAuction={currentAuction.nounId.eq(0)}
       isLastAuction={currentAuction.nounId.eq(lastNounId)}
       onPrevAuctionClick={prevAuctionHandler}

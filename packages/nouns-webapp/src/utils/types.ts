@@ -14,6 +14,7 @@ export interface AuctionCreateEvent {
   startTime: BigNumberish;
   endTime: BigNumberish;
   settled: boolean;
+  opacity: number;
 }
 
 export interface AuctionSettledEvent {

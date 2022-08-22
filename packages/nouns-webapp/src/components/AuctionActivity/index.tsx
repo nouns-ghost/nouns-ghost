@@ -105,7 +105,7 @@ const AuctionActivity: React.FC<AuctionActivityProps> = (props: AuctionActivityP
               <AuctionActivityDateHeadline startTime={auction.startTime} />
             </AuctionTitleAndNavWrapper>
             <Col lg={12}>
-              <AuctionActivityNounTitle isCool={isCool} nounId={auction.nounId} />
+              <AuctionActivityNounTitle isCool={isCool} nounId={auction.nounId} opacity={auction.opacity} />
             </Col>
           </Row>
           <Row className={classes.activityRow}>

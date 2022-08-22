@@ -12,6 +12,7 @@ const deserializeAuction = (reduxSafeAuction: Auction): Auction => {
     endTime: BigNumber.from(reduxSafeAuction.endTime),
     nounId: BigNumber.from(reduxSafeAuction.nounId),
     settled: false,
+    opacity: reduxSafeAuction.opacity,
   };
 };
 

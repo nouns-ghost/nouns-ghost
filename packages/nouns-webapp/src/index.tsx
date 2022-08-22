@@ -118,7 +118,7 @@ const ChainSubscriber: React.FC = () => {
 
     const bidFilter = nounsAuctionHouseContract.filters.AuctionBid(null, null, null, null);
     const extendedFilter = nounsAuctionHouseContract.filters.AuctionExtended(null, null);
-    const createdFilter = nounsAuctionHouseContract.filters.AuctionCreated(null, null, null);
+    const createdFilter = nounsAuctionHouseContract.filters.AuctionCreated(null, null, null, null);
     const settledFilter = nounsAuctionHouseContract.filters.AuctionSettled(null, null, null);
     const processBidFilter = async (
       nounId: BigNumberish,
@@ -137,9 +137,10 @@ const ChainSubscriber: React.FC = () => {
       nounId: BigNumberish,
       startTime: BigNumberish,
       endTime: BigNumberish,
+      opacity: number,
     ) => {
       dispatch(
-        setActiveAuction(reduxSafeNewAuction({ nounId, startTime, endTime, settled: false })),
+        setActiveAuction(reduxSafeNewAuction({ nounId, startTime, endTime, settled: false, opacity })),
       );
       const nounIdNumber = BigNumber.from(nounId).toNumber();
       dispatch(push(nounPath(nounIdNumber)));
@@ -168,8 +169,8 @@ const ChainSubscriber: React.FC = () => {
     nounsAuctionHouseContract.on(bidFilter, (nounId, sender, value, extended, event) =>
       processBidFilter(nounId, sender, value, extended, event),
     );
-    nounsAuctionHouseContract.on(createdFilter, (nounId, startTime, endTime) =>
-      processAuctionCreated(nounId, startTime, endTime),
+    nounsAuctionHouseContract.on(createdFilter, (nounId, startTime, endTime, opacity) =>
+      processAuctionCreated(nounId, startTime, endTime, opacity),
     );
     nounsAuctionHouseContract.on(extendedFilter, (nounId, endTime) =>
       processAuctionExtended(nounId, endTime),
