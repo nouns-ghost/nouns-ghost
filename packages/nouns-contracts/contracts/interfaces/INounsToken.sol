@@ -22,7 +22,7 @@ import { INounsDescriptor } from './INounsDescriptor.sol';
 import { INounsSeeder } from './INounsSeeder.sol';
 
 interface INounsToken is IERC721 {
-    event NounCreated(uint256 indexed tokenId, INounsSeeder.Seed seed);
+    event NounCreated(uint256 indexed tokenId, INounsSeeder.Seed seed, uint8 opacity);
 
     event NounBurned(uint256 indexed tokenId);
 

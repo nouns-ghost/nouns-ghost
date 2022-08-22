@@ -298,7 +298,7 @@ contract NounsToken is INounsToken, Ownable, ERC721Checkpointable {
         opacities[nounId] = opacity;
 
         _mint(owner(), to, nounId);
-        emit NounCreated(nounId, seed); //TODO add opacity
+        emit NounCreated(nounId, seed, opacity);
 
         return nounId;
     }

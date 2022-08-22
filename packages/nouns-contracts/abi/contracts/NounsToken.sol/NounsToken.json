@@ -222,6 +222,12 @@
         "internalType": "struct INounsSeeder.Seed",
         "name": "seed",
         "type": "tuple"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint8",
+        "name": "opacity",
+        "type": "uint8"
       }
     ],
     "name": "NounCreated",
