@@ -170,6 +170,35 @@ const Documentation = () => {
               </p>
             </Accordion.Body>
           </Accordion.Item>
+          <Accordion.Item eventKey="6" className={classes.accordionItem}>
+            <Accordion.Header className={classes.accordionHeader}>
+              Which opacities are available?
+            </Accordion.Header>
+            <Accordion.Body>
+              <p>
+                It's predefined; 5%, 10%, 20% 30% and 40%. If there's no vote, 40% is the default.
+              </p>
+            </Accordion.Body>
+          </Accordion.Item>
+          <Accordion.Item eventKey="7" className={classes.accordionItem}>
+            <Accordion.Header className={classes.accordionHeader}>
+              How "voting" works?
+            </Accordion.Header>
+            <Accordion.Body>
+              <p>
+                On each auction starts, the vote is reset. When the vote is a tie, the largest opacity is selected.
+              </p>
+              <p>
+                Imagine that there is an internal array named opacity and the values are [0, 0, 0, 0, 0].
+                Each number represents the number of votes for 5%, 10%, 20%, 30% and 40%.
+                For instance, Alice voted 5% and Bob voted 10%. Now, if you vote 30%, it's a tie. In this case, 30% is used for the next auction.
+                If you vote 5%, 5% is used for the next auction.
+              </p>
+              <p>
+                The drop down menue in the voting page lists Ghost Nouns which are not used yet. Once you use a Ghost Noun, it won't be listed later on.
+              </p>
+            </Accordion.Body>
+          </Accordion.Item>
         </Accordion>
     </Section>
     </div>
