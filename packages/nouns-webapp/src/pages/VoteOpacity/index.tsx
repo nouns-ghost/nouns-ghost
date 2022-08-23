@@ -79,12 +79,13 @@ export default function VoteOpacityPage() {
       </Row>
       <Row>
         <p>
-          By consuming your noun, you can vote the opacity for the next mint!<br/>
-          Pleae note that consumed nonuce is marked as "voted" and you cannot reuse it for vote any more. But no worries, the noun is still yours.
+          By consuming your Ghost Noun, you can vote an opacity for the next auction!<br/>
+          Please note that used Ghost Nonu is marked as "used" and you cannot reuse it for the future vote.
+          But no worries, the Ghost Noun is still yours.
         </p>
       </Row>
       <Row>
-        <DropdownButton title="Select your noun to vote" onSelect={onSelect} size="lg">
+        <DropdownButton title="Select your Ghost Noun" onSelect={onSelect} size="lg">
           {
             selection
           }
