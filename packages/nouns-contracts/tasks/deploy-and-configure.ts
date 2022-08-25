@@ -30,6 +30,7 @@ task('deploy-and-configure', 'Deploy and configure all contracts')
 
     // Populate the on-chain art
     await run('populate-descriptor', {
+      autoDeploy: args.autoDeploy,
       nftDescriptor: contracts.NFTDescriptor.address,
       nounsDescriptor: contracts.NounsDescriptor.address,
     });

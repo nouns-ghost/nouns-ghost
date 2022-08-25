@@ -139,7 +139,8 @@ task('deploy', 'Deploys NFTDescriptor, NounsDescriptor, NounsSeeder, and NounsTo
     for (const [name, contract] of Object.entries(contracts)) {
       let gasPrice = await ethers.provider.getGasPrice();
       if (!args.autoDeploy) {
-        const gasInGwei = Math.round(Number(ethers.utils.formatUnits(gasPrice, 'gwei')));
+        //const gasInGwei = Math.round(Number(ethers.utils.formatUnits(gasPrice, 'gwei')));
+        const gasInGwei = Number(ethers.utils.formatUnits(gasPrice, 'gwei'));
 
         promptjs.start();
 
@@ -147,7 +148,7 @@ task('deploy', 'Deploys NFTDescriptor, NounsDescriptor, NounsSeeder, and NounsTo
           {
             properties: {
               gasPrice: {
-                type: 'integer',
+                type: 'number',
                 required: true,
                 description: 'Enter a gas price (gwei)',
                 default: gasInGwei,

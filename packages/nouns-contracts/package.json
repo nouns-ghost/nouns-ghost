@@ -20,6 +20,7 @@
     "task:mint-noun": "npx hardhat mint-noun",
     "task:populate-descriptor": "npx hardhat populate-descriptor",
     "task:run-local": "npx hardhat run-local",
+    "task:pause-unpause": "npx hardhat pause-unpause",
     "test": "npx hardhat test",
     "coverage": "npx hardhat coverage",
     "prepare": "yarn build"
