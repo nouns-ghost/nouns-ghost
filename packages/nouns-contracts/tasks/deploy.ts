@@ -3,6 +3,7 @@ import { ChainId, ContractDeployment, ContractName, DeployedContract } from './t
 import { Interface } from 'ethers/lib/utils';
 import { task, types } from 'hardhat/config';
 import promptjs from 'prompt';
+import { guaranteeGasPrice, getGwei } from './utils'
 
 promptjs.colors = false;
 promptjs.message = '> ';
@@ -48,6 +49,12 @@ task('deploy', 'Deploys NFTDescriptor, NounsDescriptor, NounsSeeder, and NounsTo
     'The auction duration (seconds)',
     60 * 60 * 24 /* 24 hours */,
     types.int,
+  )
+  .addOptionalParam(
+    'guaranteedGasPrice',
+    'Wait until the gas prices is less than the limit',
+    2.5,
+    types.float
   )
   .setAction(async (args, { ethers }) => {
     const network = await ethers.provider.getNetwork();
@@ -137,10 +144,10 @@ task('deploy', 'Deploys NFTDescriptor, NounsDescriptor, NounsSeeder, and NounsTo
     };
 
     for (const [name, contract] of Object.entries(contracts)) {
-      let gasPrice = await ethers.provider.getGasPrice();
+      let gasPrice = await guaranteeGasPrice(ethers, args.guaranteedGasPrice, 10*1000);
+
       if (!args.autoDeploy) {
-        //const gasInGwei = Math.round(Number(ethers.utils.formatUnits(gasPrice, 'gwei')));
-        const gasInGwei = Number(ethers.utils.formatUnits(gasPrice, 'gwei'));
+        const gasInGwei = getGwei(gasPrice);
 
         promptjs.start();
 

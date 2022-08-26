@@ -3,6 +3,7 @@ import ImageData from '../files/image-data.json';
 import { chunkArray } from '../utils';
 import { BigNumber, ContractTransaction } from 'ethers';
 import promptjs from 'prompt';
+import { guaranteeGasPrice, getGwei } from './utils'
 
 
 task('populate-descriptor', 'Populates the descriptor with color palettes and Noun parts')
@@ -19,7 +20,13 @@ task('populate-descriptor', 'Populates the descriptor with color palettes and No
     '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512',
     types.string,
   )
-  .setAction(async ({ autoDeploy, nftDescriptor, nounsDescriptor }, { ethers }) => {
+  .addOptionalParam(
+    'guaranteedGasPrice',
+    'Wait until the gas prices is less than the limit',
+    2.5,
+    types.float
+  )
+  .setAction(async ({ autoDeploy, nftDescriptor, nounsDescriptor, guaranteedGasPrice }, { ethers }) => {
     const printConstResult = async(tx: ContractTransaction) => {
       const receipt = await ethers.provider.waitForTransaction(tx.hash)
       const fee = tx.gasPrice!.mul(receipt.gasUsed.toBigInt())
@@ -28,8 +35,7 @@ task('populate-descriptor', 'Populates the descriptor with color palettes and No
     }
 
     const confirmGasPrice = async(gasPrice: BigNumber): Promise<BigNumber> => {
-        //const gasInGwei = Math.round(Number(ethers.utils.formatUnits(gasPrice, 'gwei')));
-        const gasInGwei = Number(ethers.utils.formatUnits(gasPrice, 'gwei'));
+        const gasInGwei = getGwei(gasPrice);
 
         promptjs.start();
 
@@ -61,9 +67,10 @@ task('populate-descriptor', 'Populates the descriptor with color palettes and No
     // Chunk head and accessory population due to high gas usage
     let txResult: ContractTransaction;
     let gasPrice: BigNumber;
+    const interval = 10 * 1000;
 
     console.log('## addManyBackgrounds')
-    gasPrice = await ethers.provider.getGasPrice();
+    gasPrice = await guaranteeGasPrice(ethers, guaranteedGasPrice, interval);
     if (!autoDeploy) {
       gasPrice = await confirmGasPrice(gasPrice);
     }
@@ -71,7 +78,7 @@ task('populate-descriptor', 'Populates the descriptor with color palettes and No
     await printConstResult(txResult)
 
     console.log('## addManyColorsToPalette')
-    gasPrice = await ethers.provider.getGasPrice();
+    gasPrice = await guaranteeGasPrice(ethers, guaranteedGasPrice, interval);
     if (!autoDeploy) {
       gasPrice = await confirmGasPrice(gasPrice);
     }
@@ -79,7 +86,7 @@ task('populate-descriptor', 'Populates the descriptor with color palettes and No
     await printConstResult(txResult)
 
     console.log('## addManyBodies')
-    gasPrice = await ethers.provider.getGasPrice();
+    gasPrice = await guaranteeGasPrice(ethers, guaranteedGasPrice, interval);
     if (!autoDeploy) {
       gasPrice = await confirmGasPrice(gasPrice);
     }
@@ -89,7 +96,7 @@ task('populate-descriptor', 'Populates the descriptor with color palettes and No
     console.log('## addManyAccessories')
     const accessoryChunk = chunkArray(accessories, 10);
     for (let i = 0; i < accessoryChunk.length; i++) {
-      gasPrice = await ethers.provider.getGasPrice();
+      gasPrice = await guaranteeGasPrice(ethers, guaranteedGasPrice, interval);
       if (!autoDeploy) {
         gasPrice = await confirmGasPrice(gasPrice);
       }
@@ -101,7 +108,7 @@ task('populate-descriptor', 'Populates the descriptor with color palettes and No
     console.log('## addManyHeads')
     const headChunk = chunkArray(heads, 10);
     for (let i = 0; i< headChunk.length; i++) {
-      gasPrice = await ethers.provider.getGasPrice();
+      gasPrice = await guaranteeGasPrice(ethers, guaranteedGasPrice, interval);
       if (!autoDeploy) {
         gasPrice = await confirmGasPrice(gasPrice);
       }
@@ -111,7 +118,7 @@ task('populate-descriptor', 'Populates the descriptor with color palettes and No
     }
 
     console.log('## addManyGlasses')
-    gasPrice = await ethers.provider.getGasPrice();
+    gasPrice = await guaranteeGasPrice(ethers, guaranteedGasPrice, interval);
     if (!autoDeploy) {
       gasPrice = await confirmGasPrice(gasPrice);
     }
