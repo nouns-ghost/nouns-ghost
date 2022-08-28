@@ -1,21 +1,21 @@
 {
   "1": {
-    "nounsToken": "0x9C8fF314C9Bc7F6e59A9d9225Fb22946427eDC03",
-    "nounsSeeder": "0xCC8a0FB5ab3C7132c1b2A0109142Fb112c4Ce515",
-    "nounsDescriptor": "0x0Cfdb3Ba1694c2bb2CFACB0339ad7b1Ae5932B63",
-    "nftDescriptor": "0x0BBAd8c947210ab6284699605ce2a61780958264",
-    "nounsAuctionHouse": "0xF15a943787014461d94da08aD4040f79Cd7c124e",
-    "nounsAuctionHouseProxy": "0x830BD73E4184ceF73443C15111a1DF14e495C706",
-    "nounsAuctionHouseProxyAdmin": "0xC1C119932d78aB9080862C5fcb964029f086401e"
+    "nounsToken": "0xf9bcfF41f32F42212D50d7ace9a412679FBbD3B8",
+    "nounsSeeder": "0xBBf9E53D3CCc3f154a06450A38dC54e137359838",
+    "nounsDescriptor": "0xC76faaAdAFe6481C99767886344658dBCc0f4db0",
+    "nftDescriptor": "0xF88fAa11BeC88E303048Cc2e44c45e38E7B09982",
+    "nounsAuctionHouse": "0x3573dAD8269687EEE99321F2Fee9467A2daB6761",
+    "nounsAuctionHouseProxy": "0xaf8c4073e3c914c87871ecc387d1059cb4041201",
+    "nounsAuctionHouseProxyAdmin": "0xd56e8fe6Ae0AcdF50D94144D0b89141C0dF3C71A"
   },
   "4": {
-    "nounsToken": "0x73199d47c74E0FCaE354C0A9B6456D4bf2aD4195",
-    "nounsSeeder": "0xB7Ce7b26382681eFCCa36264f9213Eb802b93D62",
-    "nounsDescriptor": "0x2F1f807a6Cd6759252A1AE1c0Bf3DB29fb415355",
-    "nftDescriptor": "0xad0b867DD9C3B0f6Fe28385c4EC6aC7165525c94",
-    "nounsAuctionHouse": "0xeE1C7FDEcB40a28692E2C3E529d2FD5b8Aba5FDD",
-    "nounsAuctionHouseProxy": "0xbaB5F275FAF5170c004a7A762c9a2fB80d78b0CB",
-    "nounsAuctionHouseProxyAdmin": "0x4B68D8e45Ebd46bBB07968Fac683F972Bb2a1CB2"
+    "nounsToken": "0x9C6fF282aeb2B6441A4E789590aCaA4f56Cf8E3B",
+    "nounsSeeder": "0xb25B80cC229a3AF16780AAA0d0dDCB634e2e1Bbb",
+    "nounsDescriptor": "0xb64e140084E2a45558B3b6ab7f5a7C491Ca11045",
+    "nftDescriptor": "0x903ec31b5288A9fd4599099374637193E6EED309",
+    "nounsAuctionHouse": "0x1E9336835BD87F5A4B6F369859bD2EF6ad982c6C",
+    "nounsAuctionHouseProxy": "0x53a705B25D0bb399fde490A355C9022E96f6C066",
+    "nounsAuctionHouseProxyAdmin": "0xdbcDd5a67FC0A05050c1B121EfE158ea47c67623"
   },
   "31337": {
     "nounsToken": "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
