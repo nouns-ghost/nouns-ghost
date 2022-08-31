@@ -55,14 +55,14 @@ const app: Record<SupportedChains, AppConfig> = {
   [ChainId.Rinkeby]: {
     jsonRpcUri: createNetworkHttpUrl('rinkeby'),
     wsRpcUri: createNetworkWsUrl('rinkeby'),
-    subgraphApiUri: 'https://api.thegraph.com/subgraphs/name/nounsdao/nouns-subgraph-rinkeby-v4',
-    enableHistory: process.env.REACT_APP_ENABLE_HISTORY === 'true',
+    subgraphApiUri: '',
+    enableHistory: false,
   },
   [ChainId.Mainnet]: {
     jsonRpcUri: createNetworkHttpUrl('mainnet'),
     wsRpcUri: createNetworkWsUrl('mainnet'),
-    subgraphApiUri: 'https://api.thegraph.com/subgraphs/name/nounsdao/nouns-subgraph',
-    enableHistory: process.env.REACT_APP_ENABLE_HISTORY === 'true',
+    subgraphApiUri: '',
+    enableHistory: false,
   },
   [ChainId.Hardhat]: {
     jsonRpcUri: 'http://localhost:8545',
