@@ -65,7 +65,7 @@ const Auction: React.FC<AuctionProps> = props => {
       isLastAuction={currentAuction.nounId.eq(lastNounId)}
       onPrevAuctionClick={prevAuctionHandler}
       onNextAuctionClick={nextAuctionHandler}
-      displayGraphDepComps={false}
+      displayGraphDepComps={true}
     />
   );
   const nounderNounContent = currentAuction && lastNounId && (

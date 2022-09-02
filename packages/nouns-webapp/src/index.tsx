@@ -184,9 +184,43 @@ const ChainSubscriber: React.FC = () => {
   return <></>;
 };
 
+const generateDummyData = (length: number | undefined) => {
+  if (!length) {
+    length = 0;
+  }
+
+  const auctions: any[] = new Array(length);
+  for (let i = 0; i < length; i++) {
+    const auction = {
+      __typename: "Auction",
+      id: i.toString(),
+      amount: "0",
+      settled: true,
+      bidder: {
+        __typename: "",
+        id: "0"
+      },
+      opacity: "0",
+      startTime: "0",
+      endTime: "0",
+      noun: {
+        __typename: "Noun",
+        id: "1",
+        owner: {
+          __typename: "Account",
+          id: "0"
+        }
+      },
+      bids: []
+    };
+    auctions[i] = auction;
+  }
+  return {auctions: auctions}
+}
+
 const PastAuctions: React.FC = () => {
   const latestAuctionId = useAppSelector(state => state.onDisplayAuction.lastAuctionNounId);
-  const { data } = useQuery(latestAuctionsQuery());
+  const data = generateDummyData(latestAuctionId);
   const dispatch = useAppDispatch();
 
   useEffect(() => {

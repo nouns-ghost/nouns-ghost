@@ -21,6 +21,7 @@ import NounInfoCard from '../NounInfoCard';
 import { useAppSelector } from '../../hooks';
 import BidHistoryModal from '../BidHistoryModal';
 import Holder from '../Holder';
+import { useOpacities } from '../../wrappers/nounToken';
 
 const openEtherscanBidHistory = () => {
   const url = buildEtherscanAddressLink(config.addresses.nounsAuctionHouseProxy);
@@ -50,6 +51,9 @@ const AuctionActivity: React.FC<AuctionActivityProps> = (props: AuctionActivityP
 
   const [auctionEnded, setAuctionEnded] = useState(false);
   const [auctionTimer, setAuctionTimer] = useState(false);
+
+  const isDummy = auction.opacity == 0;
+  const opacity = useOpacities(auction.nounId)[0]!;
 
   const [showBidHistoryModal, setShowBidHistoryModal] = useState(false);
   const showBidModalHandler = () => {
@@ -105,9 +109,10 @@ const AuctionActivity: React.FC<AuctionActivityProps> = (props: AuctionActivityP
               <AuctionActivityDateHeadline startTime={auction.startTime} />
             </AuctionTitleAndNavWrapper>
             <Col lg={12}>
-              <AuctionActivityNounTitle isCool={isCool} nounId={auction.nounId} opacity={auction.opacity} />
+              <AuctionActivityNounTitle isCool={isCool} nounId={auction.nounId} opacity={auction.opacity == 0 ? opacity : auction.opacity} />
             </Col>
           </Row>
+          {isDummy ? <></> :
           <Row className={classes.activityRow}>
             <Col lg={4} className={classes.currentBidCol}>
               <CurrentBid
@@ -127,6 +132,7 @@ const AuctionActivity: React.FC<AuctionActivityProps> = (props: AuctionActivityP
               )}
             </Col>
           </Row>
+          }
         </div>
         {isLastAuction && (
           <>
@@ -137,6 +143,7 @@ const AuctionActivity: React.FC<AuctionActivityProps> = (props: AuctionActivityP
             </Row>
           </>
         )}
+        {isDummy ? <></> :
         <Row className={classes.activityRow}>
           <Col lg={12}>
             {!isLastAuction ? (
@@ -164,6 +171,7 @@ const AuctionActivity: React.FC<AuctionActivityProps> = (props: AuctionActivityP
               ))}
           </Col>
         </Row>
+        }
       </AuctionActivityWrapper>
     </>
   );

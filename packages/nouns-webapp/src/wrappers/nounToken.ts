@@ -168,3 +168,14 @@ export const useTokenOfOwnerNotVoted = (owner: string) => {
     }) || [];
   return ret;
 };
+
+export const useOpacities = (nounId: EthersBN) => {
+  const ret =
+    useContractCall<[number]>({
+      abi,
+      address: config.addresses.nounsToken,
+      method: 'opacities',
+      args: [nounId],
+    }) || [];
+  return ret;
+};
